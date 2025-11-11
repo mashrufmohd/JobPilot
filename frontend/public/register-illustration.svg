@@ -1,0 +1,44 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="150" fill="#667eea" opacity="0.1"/>
+  
+  <!-- Person with laptop illustration -->
+  <g transform="translate(120, 80)">
+    <!-- Laptop -->
+    <rect x="40" y="160" width="120" height="80" rx="5" fill="#4F46E5"/>
+    <rect x="45" y="165" width="110" height="60" fill="#E0E7FF"/>
+    <rect x="80" y="240" width="40" height="10" fill="#4F46E5"/>
+    
+    <!-- Person -->
+    <circle cx="100" cy="80" r="30" fill="#FDB4B4"/>
+    <path d="M 70 110 Q 70 130, 85 140 L 115 140 Q 130 130, 130 110 Z" fill="#667eea"/>
+    <circle cx="90" cy="75" r="3" fill="#1F2937"/>
+    <circle cx="110" cy="75" r="3" fill="#1F2937"/>
+    <path d="M 95 85 Q 100 88, 105 85" stroke="#1F2937" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Feature cards -->
+  <g transform="translate(0, 300)">
+    <!-- Mock Interview -->
+    <rect x="30" y="0" width="100" height="70" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="80" y="35" font-size="24" text-anchor="middle">🎤</text>
+    <text x="80" y="55" font-size="12" text-anchor="middle" font-weight="600" fill="#1F2937">Mock Interview</text>
+    
+    <!-- Interview Prep -->
+    <rect x="150" y="0" width="100" height="70" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="200" y="35" font-size="24" text-anchor="middle">💼</text>
+    <text x="200" y="55" font-size="11" text-anchor="middle" font-weight="600" fill="#1F2937">Interview Prep</text>
+    
+    <!-- Coding Sprint -->
+    <rect x="270" y="0" width="100" height="70" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="320" y="35" font-size="24" text-anchor="middle">🎯</text>
+    <text x="320" y="55" font-size="11" text-anchor="middle" font-weight="600" fill="#1F2937">Coding Sprint</text>
+  </g>
+  
+  <!-- Practice text -->
+  <g transform="translate(100, 380)">
+    <rect x="0" y="0" width="200" height="50" rx="8" fill="white" stroke="#4F46E5" stroke-width="2"/>
+    <text x="100" y="25" font-size="18" text-anchor="middle" font-weight="700" fill="#4F46E5">Practice</text>
+    <text x="100" y="42" font-size="12" text-anchor="middle" fill="#6B7280">Easy to Complex Problems</text>
+  </g>
+</svg>

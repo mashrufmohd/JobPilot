@@ -1,0 +1,431 @@
+﻿import React, { useState } from 'react';
+import { Box, TextField, Button, Typography, Link, InputAdornment, IconButton, Checkbox, FormControlLabel, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/material.css';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { registerSuccess } from '../store/authSlice';
+import axiosInstance from '../api/axiosInstance';
+
+const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [gender, setGender] = useState('m');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const password = watch('password');
+
+  const onSubmit = async (data) => {
+    if (!phone || phone.length < 10) {
+      toast.error('Please enter a valid mobile number');
+      return;
+    }
+
+    if (!agreedToTerms) {
+      toast.error('Please agree to the privacy policy and terms');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
+      
+      const registerData = {
+        ...data,
+        mobile_no: formattedPhone,
+        gender: gender
+      };
+      delete registerData.confirmPassword;
+
+      const response = await axiosInstance.post('/auth/register', registerData);
+      
+      if (response.success) {
+        dispatch(registerSuccess({
+          token: response.data.token,
+          user: response.data.user
+        }));
+        toast.success('Registration successful!');
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Registration failed';
+      const errors = error.response?.data?.errors;
+      
+      if (errors && Array.isArray(errors)) {
+        errors.forEach(err => {
+          toast.error(`${err.field}: ${err.message}`);
+        });
+      } else {
+        toast.error(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: '#f5f7fa',
+        p: 4,
+      }}
+    >
+<Box
+        sx={{
+          display: 'flex',
+          maxWidth: 1200,
+          width: '100%',
+          height: '85vh',
+          maxHeight: 700,
+          bgcolor: 'white',
+          borderRadius: 3,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            flex: 1,
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            display: { xs: 'none', md: 'flex' },
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            p: 6,
+          }}
+        >
+          <Box
+            component="img"
+            src="/src/public/card.png"
+            alt="Welcome"
+            sx={{
+              width: '100%',
+              maxWidth: '500px',
+              height: 'auto',
+              borderRadius: 2,
+              boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+            }}
+          />
+        </Box>
+<Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: 'white',
+            px: 3,
+            py: 2,
+          }}
+        >
+        <Box sx={{ maxWidth: 420, width: '100%' }}>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              mb: 2,
+              color: '#000',
+              fontSize: '24px',
+            }}
+          >
+            Register as a Company
+          </Typography>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+<Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+              Full Name
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Enter Your Full Name"
+              {...register('full_name', {
+                required: 'Full name is required',
+                minLength: { value: 2, message: 'Name must be at least 2 characters' }
+              })}
+              error={!!errors.full_name}
+              helperText={errors.full_name?.message}
+              sx={{
+                mb: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#f8f9fa',
+                  borderRadius: '8px',
+                  '& fieldset': { borderColor: '#e0e0e0' },
+                },
+              }}
+            />
+<Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+              Mobile No
+            </Typography>
+            <PhoneInput
+              country={'in'}
+              value={phone}
+              onChange={setPhone}
+              inputStyle={{
+                width: '100%',
+                height: '40px',
+                backgroundColor: '#f8f9fa',
+                border: '1px solid #e0e0e0',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }}
+              buttonStyle={{
+                backgroundColor: '#f8f9fa',
+                border: '1px solid #e0e0e0',
+                borderRadius: '8px 0 0 8px',
+              }}
+              containerStyle={{ marginBottom: '12px' }}
+            />
+<Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+              Organization Email
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Official Email"
+              type="email"
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Invalid email address'
+                }
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              sx={{
+                mb: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#f8f9fa',
+                  borderRadius: '8px',
+                  '& fieldset': { borderColor: '#e0e0e0' },
+                },
+              }}
+            />
+<Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+              Gender
+            </Typography>
+            <ToggleButtonGroup
+              value={gender}
+              exclusive
+              onChange={(e, newGender) => newGender && setGender(newGender)}
+              fullWidth
+              sx={{ mb: 1.5 }}
+            >
+              <ToggleButton
+                value="m"
+                sx={{
+                  py: 1,
+                  textTransform: 'none',
+                  fontSize: '13px',
+                  bgcolor: gender === 'm' ? '#E8F0FE' : '#f8f9fa',
+                  color: gender === 'm' ? '#4F46E5' : '#6B7280',
+                  border: '1px solid #e0e0e0 !important',
+                  borderRadius: '8px 0 0 8px !important',
+                  '&.Mui-selected': {
+                    bgcolor: '#E8F0FE',
+                    color: '#4F46E5',
+                    fontWeight: 600,
+                  },
+                }}
+              >
+                Male
+              </ToggleButton>
+              <ToggleButton
+                value="f"
+                sx={{
+                  py: 1,
+                  textTransform: 'none',
+                  fontSize: '13px',
+                  bgcolor: gender === 'f' ? '#E8F0FE' : '#f8f9fa',
+                  color: gender === 'f' ? '#4F46E5' : '#6B7280',
+                  border: '1px solid #e0e0e0 !important',
+                  borderRadius: '0 !important',
+                  '&.Mui-selected': {
+                    bgcolor: '#E8F0FE',
+                    color: '#4F46E5',
+                    fontWeight: 600,
+                  },
+                }}
+              >
+                Female
+              </ToggleButton>
+              <ToggleButton
+                value="o"
+                sx={{
+                  py: 1,
+                  textTransform: 'none',
+                  fontSize: '13px',
+                  bgcolor: gender === 'o' ? '#E8F0FE' : '#f8f9fa',
+                  color: gender === 'o' ? '#4F46E5' : '#6B7280',
+                  border: '1px solid #e0e0e0 !important',
+                  borderRadius: '0 8px 8px 0 !important',
+                  '&.Mui-selected': {
+                    bgcolor: '#E8F0FE',
+                    color: '#4F46E5',
+                    fontWeight: 600,
+                  },
+                }}
+              >
+                Other
+              </ToggleButton>
+            </ToggleButtonGroup>
+<Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+                  Password
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', {
+                    required: 'Password is required',
+                    minLength: { value: 8, message: 'Min 8 characters' },
+                    pattern: {
+                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+                      message: 'Must include uppercase, lowercase, number, and special character'
+                    }
+                  })}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small">
+                          {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      bgcolor: '#f8f9fa',
+                      borderRadius: '8px',
+                      '& fieldset': { borderColor: '#e0e0e0' },
+                    },
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="body2" sx={{ mb: 0.5, color: '#000', fontWeight: 500, fontSize: '13px' }}>
+                  Confirm Password
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Confirm Password"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  {...register('confirmPassword', {
+                    required: 'Confirm password',
+                    validate: value => value === password || 'Passwords do not match'
+                  })}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end" size="small">
+                          {showConfirmPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      bgcolor: '#f8f9fa',
+                      borderRadius: '8px',
+                      '& fieldset': { borderColor: '#e0e0e0' },
+                    },
+                  }}
+                />
+              </Box>
+            </Box>
+<Typography variant="caption" sx={{ color: '#6B7280', fontSize: '11px', mb: 1.5, display: 'block' }}>
+              Password must be at least 8 characters with uppercase, lowercase, number, and special character (@$!%*?&)
+            </Typography>
+<FormControlLabel
+              control={
+                <Checkbox
+                  size="small"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  sx={{ color: '#6B7280', py: 0 }}
+                />
+              }
+              label={
+                <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '11px', lineHeight: 1.3 }}>
+                  All your information is collected, stored and processed as per our data processing guidelines, by signing on theNext, you agree to our{' '}
+                  <Link href="#" sx={{ color: '#4F46E5', textDecoration: 'none' }}>
+                    privacy Policy
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="#" sx={{ color: '#4F46E5', textDecoration: 'none' }}>
+                    terms of use
+                  </Link>
+                </Typography>
+              }
+              sx={{ mb: 1.5, alignItems: 'flex-start', mt: 0 }}
+            />
+<Button
+              fullWidth
+              variant="contained"
+              size="medium"
+              type="submit"
+              disabled={loading}
+              sx={{
+                py: 1.2,
+                mb: 1.5,
+                borderRadius: '50px',
+                bgcolor: '#5B8DEE',
+                textTransform: 'none',
+                fontSize: '15px',
+                fontWeight: 600,
+                boxShadow: 'none',
+                '&:hover': {
+                  bgcolor: '#4F46E5',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              {loading ? 'Registering...' : 'Register'}
+            </Button>
+<Typography variant="body2" align="center" sx={{ color: '#6B7280' }}>
+              Already have an account ? ?{' '}
+              <Link
+                component="button"
+                type="button"
+                onClick={() => navigate('/login')}
+                sx={{
+                  color: '#4F46E5',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  '&:hover': { textDecoration: 'underline' },
+                }}
+              >
+                Login
+              </Link>
+            </Typography>
+          </form>
+        </Box>
+      </Box>
+    </Box>
+    </Box>
+  );
+};
+
+export default Register;

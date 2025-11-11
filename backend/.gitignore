@@ -1,0 +1,138 @@
+# ==========================================
+# IMPORTANT: Sensitive Files & Credentials
+# ==========================================
+
+# Environment Variables (CRITICAL - Contains all secrets)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# IMPORTANT: Allow .env.example (it's a template)
+!.env.example
+
+# Firebase Credentials
+firebase-adminsdk-*.json
+serviceAccountKey.json
+firebase.json
+.firebaserc
+
+# Database credentials & backups
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+db/*.sql
+database.json
+
+# SSL Certificates & Keys
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+ssl/
+
+# API Keys & Secrets
+secrets.json
+config/secrets.js
+credentials.json
+
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+jspm_packages/
+bower_components/
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Runtime & Process Files
+# ==========================================
+pids/
+*.pid
+*.seed
+*.pid.lock
+.npm
+.node_repl_history
+
+# ==========================================
+# Testing & Coverage
+# ==========================================
+coverage/
+.nyc_output/
+*.test.js.snap
+.coverage/
+test-results/
+
+# ==========================================
+# Build & Distribution
+# ==========================================
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# ==========================================
+# IDE & Editors
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Operating System
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Uploads & User Generated Content
+# ==========================================
+uploads/
+temp/
+tmp/
+*.tmp
+
+# ==========================================
+# Package Manager
+# ==========================================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnpm-debug.log
+
+# ==========================================
+# Cache
+# ==========================================
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
