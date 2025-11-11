@@ -1,8 +1,8 @@
-# 🏢 Company Registration & Verification Module
+#  Company Registration & Verification Module
 
 A full-stack web application for company registration with Firebase authentication, mobile/email verification, and company profile management with PostgreSQL and Cloudinary integration.
 
-## 🎯 Features
+##  Features
 
 - **User Registration & Authentication**
   - Firebase Email/Password authentication
@@ -86,7 +86,7 @@ project-root/
     └── seed_sample_data.js
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -211,7 +211,7 @@ npm test
 
 Frontend will run on `http://localhost:5173`
 
-## 🧪 Testing
+##  Testing
 
 ### Backend Tests
 ```bash
@@ -231,7 +231,7 @@ npm test
 npm run test:coverage
 ```
 
-## 📮 API Endpoints
+##  API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
@@ -246,17 +246,17 @@ npm run test:coverage
 - `PUT /api/company/:id` - Update company profile
 - `DELETE /api/company/:id` - Delete company profile
 
-## 📚 API Documentation
+##  API Documentation
 
 Import `postman_collection.json` into Postman for full API documentation and testing.
 
-## 🎨 Design Reference
+##  Design Reference
 
 - **Figma Design**: https://www.figma.com/design/XrkHGt4e5Kt4CErCYS7sGz/4-Warm-UP-Assignment
 - **Sample UI**: https://bluestock.in/backoffice-tech/company-module-sample/index.html
 - **Database Reference**: https://bluestock.in/backoffice-tech/company_db
 
-## 🔒 Security Features
+##  Security Features
 
 - Password hashing with bcrypt (10 rounds)
 - JWT authentication with 90-day expiry
@@ -266,7 +266,7 @@ Import `postman_collection.json` into Postman for full API documentation and tes
 - CORS configuration
 - SQL injection protection via parameterized queries
 
-## 📝 Database Schema
+##  Database Schema
 
 ### Users Table
 - `id` - Primary key
@@ -293,7 +293,7 @@ Import `postman_collection.json` into Postman for full API documentation and tes
 - `social_links` - JSONB
 - `created_at`, `updated_at` - Timestamps
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 ```bash
@@ -323,7 +323,7 @@ lsof -ti:5173 | xargs kill -9
 - Check cloud name and preset name match exactly
 - Verify CORS settings in Cloudinary dashboard
 
-## 📦 Deployment
+##  Deployment
 
 ### Backend (Node.js)
 - Deploy to Heroku, Railway, Render, or AWS
@@ -339,7 +339,7 @@ lsof -ti:5173 | xargs kill -9
 - Use managed PostgreSQL (Heroku Postgres, Railway, AWS RDS, Supabase)
 - Run migration: `psql $DATABASE_URL -f db/company_db.sql`
 
-## 🤝 Contributing
+##  Contributing
 
 This is an internship assignment project. For improvements:
 1. Fork the repository
@@ -352,11 +352,11 @@ This is an internship assignment project. For improvements:
 
 This project is created for educational purposes as part of an internship assignment.
 
-## 👤 Author
+##  Author
 
 Your Name - Internship Assignment
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Figma design by assignment provider
 - Firebase for authentication
