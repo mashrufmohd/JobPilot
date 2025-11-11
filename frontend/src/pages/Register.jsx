@@ -107,7 +107,7 @@ const Register = () => {
         >
           <Box
             component="img"
-            src="/src/public/card.png"
+            src="/card.png"
             alt="Welcome"
             sx={{
               width: '100%',
