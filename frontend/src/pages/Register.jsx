@@ -35,7 +35,9 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
+      // Remove all non-digit characters except the leading +
+      const cleanPhone = phone.replace(/[^\d+]/g, '');
+      const formattedPhone = cleanPhone.startsWith('+') ? cleanPhone : `+${cleanPhone}`;
       
       const registerData = {
         ...data,
